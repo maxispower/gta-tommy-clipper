@@ -1,0 +1,15 @@
+{
+  "_help": "Named looks. Each theme is a bundle of brand.json keys (style, colors{text,spoken,outline,key,box}, hook_text, hook_box, progress, progress_color, watermark_color/opacity/size/pos). Default is vice-nights; \"none\" = no theme. Use with pick key \"theme\" (or brand.json / TOMMY_THEME). Order: theme < brand.json < pick fields. Hex without #. A theme never sets the watermark text.",
+  "themes": [
+    { "name": "vice-nights", "label": "Vice Nights (GTA Tommy default: sunset pink, teal, purple night)", "brand": {   "style": "neon",   "colors": {     "text": "FFF3FB",     "spoken": "FF2E88",     "outline": "1A0B2E",     "key": "00E5D4",     "box": "FF2E88"   },   "hook_text": "FFF3FB",   "hook_box": "FF2E88",   "progress": true,   "progress_color": "00E5D4",   "watermark_color": "00E5D4",   "watermark_opacity": 0.8,   "watermark_size": 0.2,   "watermark_pos": "tr" }
+    },
+    { "name": "clean", "label": "Clean (neutral default)", "brand": {   "style": "classic",   "colors": {     "text": "FFFFFF",     "spoken": "FFE500",     "outline": "000000",     "key": "5CFF3D"   },   "hook_text": "FFFFFF",   "hook_box": "000000",   "progress": true,   "progress_color": "FFE500",   "watermark_color": "FFFFFF",   "watermark_opacity": 0.6,   "watermark_size": 0.2,   "watermark_pos": "tl" }
+    },
+    { "name": "neon", "label": "Neon (cyan and magenta glow)", "brand": {   "style": "neon",   "colors": {     "text": "FFFFFF",     "spoken": "22D3EE",     "outline": "164E63",     "key": "FF2E93"   },   "hook_text": "FFFFFF",   "hook_box": "7C1D6F",   "progress": true,   "progress_color": "22D3EE",   "watermark_color": "22D3EE",   "watermark_opacity": 0.8,   "watermark_size": 0.2,   "watermark_pos": "bounce" }
+    },
+    { "name": "bold-yellow", "label": "Bold yellow (Hormozi punch)", "brand": {   "style": "hormozi",   "colors": {     "text": "FFFFFF",     "spoken": "FFE500",     "outline": "000000",     "key": "FF3B30"   },   "hook_text": "000000",   "hook_box": "FFE500",   "progress": true,   "progress_color": "FFE500",   "watermark_color": "FFE500",   "watermark_opacity": 0.8,   "watermark_size": 0.22,   "watermark_pos": "tl" }
+    },
+    { "name": "minimal-white", "label": "Minimal white (quiet, thin)", "brand": {   "style": "minimal",   "colors": {     "text": "FFFFFF",     "spoken": "FFFFFF",     "outline": "000000",     "key": "FFFFFF"   },   "hook_text": "FFFFFF",   "hook_box": "1A1A1A",   "progress": false,   "progress_color": "FFFFFF",   "watermark_color": "FFFFFF",   "watermark_opacity": 0.5,   "watermark_size": 0.16,   "watermark_pos": "br" }
+    }
+  ]
+}

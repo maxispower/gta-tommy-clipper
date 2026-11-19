@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+*.env
+blotato.env
+PLAN.md
+.DS_Store
+Thumbs.db
