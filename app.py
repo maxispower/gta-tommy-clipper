@@ -715,7 +715,11 @@ class H(BaseHTTPRequestHandler):
         if not p.is_file(): return self.send(404, {"error": "not found"})
         n = p.stat().st_size; a, b = 0, n - 1; code = 200; rg = self.headers.get("Range")
         m = re.match(r"bytes=(\d*)-(\d*)", rg) if rg else None
-        if m: a = int(m[1] or 0); b = int(m[2]) if m[2] else n - 1; code = 206
+        if m and (m[1] or m[2]):
+            if m[1]: a = int(m[1]); b = min(int(m[2]), n - 1) if m[2] else n - 1  # a=start, optional end clamped to the file
+            else: a = max(n - int(m[2]), 0)  # "bytes=-N" = the last N bytes
+            if a > b or a >= n: return self.send(416, {"error": "range not satisfiable"}, extra={"Content-Range": f"bytes */{n}"})
+            code = 206
         ct = ctype or {".mp4": "video/mp4", ".jpg": "image/jpeg"}.get(p.suffix, "application/octet-stream")
         self.send_response(code); self.send_header("Content-Type", ct); self.send_header("Accept-Ranges", "bytes"); self.send_header("Content-Length", str(b - a + 1))
         if code == 206: self.send_header("Content-Range", f"bytes {a}-{b}/{n}")
@@ -783,7 +787,10 @@ class H(BaseHTTPRequestHandler):
     def do_POST(self):
         if self.bad_origin(): return self.send(403, {"error": "bad Host/Origin"})
         if not secrets.compare_digest(self.headers.get("X-App") or "", TOKEN): return self.send(403, {"error": "missing or wrong token"})
-        n = int(self.headers.get("Content-Length") or 0); d = json.loads(self.rfile.read(n) or b"{}"); p = urlparse(self.path).path
+        try: n = int(self.headers.get("Content-Length") or 0); d = json.loads(self.rfile.read(n) or b"{}")
+        except ValueError: return self.send(400, {"error": "request body must be valid JSON"})  # bad JSON / Content-Length: answer instead of dropping the connection
+        if not isinstance(d, dict): return self.send(400, {"error": "request body must be a JSON object"})
+        p = urlparse(self.path).path
         try:
             key = f"{d['run']}|{d['file']}" if "run" in d and "file" in d else None
             r56 = api56("POST", p, {}, d)

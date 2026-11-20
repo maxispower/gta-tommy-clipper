@@ -393,7 +393,7 @@ def selftest():
     assert h0 == 0 and 0 < h1 < 100 and h2 > h1 and h2 <= 100 and heat("x [CLIPPED x1 42 views]") < heat("x [CLIPPED x1 5.6k views]"), (h0, h1, h2)
     assert parse_win("2:00:00-2:20:00") == (7200, 8400)
     # live chat parsers, saved sample payloads
-    fr = {"event": "App\Events\ChatMessageEvent", "channel": "chatrooms.668.v2", "data": json.dumps({"content": "LETS GO", "sender": {"username": "bob"}})}
+    fr = {"event": "App\\Events\\ChatMessageEvent", "channel": "chatrooms.668.v2", "data": json.dumps({"content": "LETS GO", "sender": {"username": "bob"}})}
     assert kick_msg(fr) == ("bob", "LETS GO") and kick_msg({"event": "pusher:pong", "data": "{}"}) is None
     yr = {"continuationContents": {"liveChatContinuation": {"continuations": [{"timedContinuationData": {"continuation": "NEXT", "timeoutMs": 4000}}], "actions": [
         {"addChatItemAction": {"item": {"liveChatTextMessageRenderer": {"authorName": {"simpleText": "amy"}, "message": {"runs": [{"text": "wow "}, {"emoji": {"shortcuts": [":fire:"]}}]}}}}}, {"other": 1}]}}}
